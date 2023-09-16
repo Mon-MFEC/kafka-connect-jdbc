@@ -1232,6 +1232,7 @@ public class GenericDatabaseDialect implements DatabaseDialect {
   ) throws SQLException {
     try (Statement statement = connection.createStatement()) {
       for (String ddlStatement : statements) {
+        System.out.println(ddlStatement);
         statement.executeUpdate(ddlStatement);
       }
     }
@@ -1240,11 +1241,12 @@ public class GenericDatabaseDialect implements DatabaseDialect {
     } catch (Exception e) {
       try {
         connection.rollback();
+        throw e;
       } catch (SQLException sqle) {
         e.addSuppressed(sqle);
-      } finally {
+      } /*finally {
         throw e;
-      }
+      }*/
     }
   }
 

@@ -1,5 +1,6 @@
 package io.confluent.connect.jdbc.sink.integration;
 
+import io.confluent.connect.jdbc.containers.FixedHostPortGenericContainerImpl;
 import io.confluent.connect.jdbc.integration.BaseConnectorIT;
 import io.confluent.connect.jdbc.sink.JdbcSinkConfig;
 import java.sql.ResultSet;
@@ -15,7 +16,9 @@ import org.junit.ClassRule;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.testcontainers.containers.Container;
 import org.testcontainers.containers.FixedHostPortGenericContainer;
+import org.testcontainers.containers.GenericContainer;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -50,11 +53,8 @@ public class MicrosoftSqlServerSinkIT extends BaseConnectorIT {
 
     @ClassRule
     @SuppressWarnings("deprecation")
-    public static final FixedHostPortGenericContainer mssqlServer =
-            new FixedHostPortGenericContainer<>("mcr.microsoft.com/mssql/server:2019-latest")
-                    .withEnv("ACCEPT_EULA","Y")
-                    .withEnv("SA_PASSWORD", PASS)
-                    .withFixedExposedPort(1433, 1433);
+    public static final FixedHostPortGenericContainer<FixedHostPortGenericContainerImpl> mssqlServer = new FixedHostPortGenericContainer<FixedHostPortGenericContainerImpl>("mcr.microsoft.com/mssql/server:2019-latest")
+            .self().withEnv("ACCEPT_EULA","Y").withEnv("SA_PASSWORD", PASS).withFixedExposedPort(1433, 1433);
 
     @Before
     public void setup() throws Exception {

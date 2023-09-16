@@ -19,6 +19,8 @@ import org.apache.kafka.connect.errors.ConnectException;
 
 public class TableAlterOrCreateException extends ConnectException {
 
+  private static final long serialVersionUID = 1234567L;
+
   public TableAlterOrCreateException(String reason) {
     super(reason);
   }

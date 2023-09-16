@@ -84,11 +84,12 @@ public class JdbcDbWriter {
     } catch (SQLException | TableAlterOrCreateException e) {
       try {
         connection.rollback();
+        throw e;
       } catch (SQLException sqle) {
         e.addSuppressed(sqle);
-      } finally {
+      } /*finally {
         throw e;
-      }
+      }*/
     }
   }
 

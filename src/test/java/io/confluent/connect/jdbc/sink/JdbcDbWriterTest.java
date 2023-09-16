@@ -94,6 +94,7 @@ public class JdbcDbWriterTest {
   }
 
   private class MockRollbackException extends SQLException {
+    private static final long serialVersionUID = 1234567L;
     public MockRollbackException() {
       super();
     }

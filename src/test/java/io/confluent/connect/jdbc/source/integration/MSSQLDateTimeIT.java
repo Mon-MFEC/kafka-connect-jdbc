@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+import io.confluent.connect.jdbc.containers.FixedHostPortGenericContainerImpl;
 import org.apache.kafka.connect.storage.StringConverter;
 import org.testcontainers.containers.FixedHostPortGenericContainer;
 
@@ -89,11 +90,8 @@ public class MSSQLDateTimeIT extends BaseConnectorIT {
 
     @ClassRule
     @SuppressWarnings("deprecation")
-    public static final FixedHostPortGenericContainer mssqlServer =
-            new FixedHostPortGenericContainer<>("microsoft/mssql-server-linux:latest")
-                .withEnv("ACCEPT_EULA","Y")
-                .withEnv("SA_PASSWORD","reallyStrongPwd123")
-                .withFixedExposedPort(1433, 1433);
+    public static final FixedHostPortGenericContainer<FixedHostPortGenericContainerImpl> mssqlServer = new FixedHostPortGenericContainer<FixedHostPortGenericContainerImpl>("microsoft/mssql-server-linux:latest")
+            .self().withEnv("ACCEPT_EULA","Y").withEnv("SA_PASSWORD","reallyStrongPwd123").withFixedExposedPort(1433, 1433);
 
     @Before
     public void setup() throws Exception {
